@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "watch.h"
-#include "app.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This section sets up types and storage for our application state.
@@ -24,10 +23,11 @@ typedef struct ApplicationState {
     ApplicationMode mode;
     LightColor color;
     uint8_t wake_count;
+    bool debounce_wait;
+    bool enter_deep_sleep;
 } ApplicationState;
 
-ApplicationState applicationState;
-
+ApplicationState application_state;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This section defines the callbacks for our button press events (implemented at bottom).
@@ -41,6 +41,8 @@ void inc_hund(); // Use a timer or something to update the hundredths 100 times 
 void update_sec_display(); // Call to just update the "seconds" part of the display
 void update_display(); // Call as often as you want to update the entire display
 
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // This section contains the required functions for any watch app. You should tear out
 // all the code in these functions when writing your app, but you must implement all
@@ -52,7 +54,7 @@ void update_display(); // Call as often as you want to update the entire display
  * internal data structures or application state required by your app.
  */
 void app_init() {
-    memset(&applicationState, 0, sizeof(applicationState));
+    memset(&application_state, 0, sizeof(application_state));
 }
 
 /**
@@ -63,7 +65,11 @@ void app_init() {
  * @see watch_enter_deep_sleep()
  */
 void app_wake_from_deep_sleep() {
-    // TODO: deep sleep demo
+    // retrieve our application state from the backup registers
+    application_state.mode = (ApplicationMode)watch_get_backup_data(0);
+    application_state.color = (LightColor)watch_get_backup_data(1);
+    application_state.wake_count = (uint8_t)watch_get_backup_data(2) + 1;
+    application_state.debounce_wait = true;
 }
 
 /**
@@ -96,6 +102,7 @@ void app_setup() {
  * a press on one of the buttons).
  */
 void app_prepare_for_sleep() {
+    application_state.debounce_wait = false;
 }
 
 /**
@@ -103,7 +110,7 @@ void app_prepare_for_sleep() {
  * STANDBY sleep mode.
  */
 void app_wake_from_sleep() {
-    applicationState.wake_count++;
+    application_state.wake_count++;
 }
 
 /**
@@ -112,7 +119,10 @@ void app_wake_from_sleep() {
  */
 bool app_loop() {
     // set the LED to a color
-    switch (applicationState.color) {
+    switch (application_state.color) {
+        case COLOR_OFF:
+            watch_set_led_off();
+            break;
         case COLOR_RED:
             watch_set_led_red();
             break;
@@ -122,18 +132,15 @@ bool app_loop() {
         case COLOR_YELLOW:
             watch_set_led_yellow();
             break;
-        default:
-            applicationState.color = COLOR_OFF;
-            watch_set_led_off();
     }
 
     // Display the number of times we've woken up (modulo 32 to fit in 2 digits at top right)
     char buf[3] = {0};
-    sprintf(buf, "%2d", applicationState.wake_count % 32);
+    sprintf(buf, "%2d", application_state.wake_count % 32);
     watch_display_string(buf, 2);
 
     // display "Hello there" text
-    switch (applicationState.mode) {
+    switch (application_state.mode) {
         case MODE_HELLO:
             watch_display_string("Hello", 5);
             break;
@@ -145,6 +152,24 @@ bool app_loop() {
     // Wait a moment to debounce button input
     delay_ms(250);
 
+    if (application_state.enter_deep_sleep) {
+        application_state.enter_deep_sleep = false;
+
+        // stash our application state in the backup registers
+        watch_store_backup_data((uint32_t)application_state.mode, 0);
+        watch_store_backup_data((uint32_t)application_state.color, 1);
+        watch_store_backup_data((uint32_t)application_state.wake_count, 2);
+
+        // turn off the LED
+        watch_set_led_off();
+
+        // wait a moment for the user's finger to be off the button
+        delay_ms(1000);
+
+        // nap time :)
+        watch_enter_deep_sleep();
+    }
+
     return true;
 }
 
@@ -153,13 +178,22 @@ bool app_loop() {
 // Implementations for our callback functions. Replace these with whatever functionality
 // your app requires.
 void cb_light_pressed() {
-    applicationState.color = (applicationState.color + 1) % 4;
+    if (application_state.debounce_wait) return;
+    application_state.debounce_wait = true;
+    application_state.color = (application_state.color + 1) % 4;
 }
 
 void cb_mode_pressed() {
-    applicationState.mode = (applicationState.mode + 1) % 2;
+    if (application_state.debounce_wait) return;
+    application_state.debounce_wait = true;
+    application_state.mode = (application_state.mode + 1) % 2;
 }
 
 void cb_alarm_pressed() {
-    // TODO: deep sleep demo
+    if (application_state.debounce_wait) return;
+    application_state.debounce_wait = true;
+    // boo: http://ww1.microchip.com/downloads/en/DeviceDoc/SAM_L22_Family_Errata_DS80000782B.pdf
+    // Reference 15010. doesn't say it applies to PA02 but it seems it does?
+    // anyway can't deep sleep now :(
+    // application_state.enter_deep_sleep = true;
 }
