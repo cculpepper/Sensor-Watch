@@ -4071,9 +4071,9 @@ by exp-lbrs.ulp</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="QBLP655R">
+<library name="QBLP655">
 <packages>
-<package name="LED_QBLP655R">
+<package name="LED_QBLP655">
 <text x="0.011609375" y="1.46263125" size="0.83205625" layer="25" font="vector" ratio="18" align="center">&gt;NAME</text>
 <text x="-0.05493125" y="-1.58081875" size="0.826140625" layer="27" font="vector" ratio="18" align="center">&gt;VALUE</text>
 <wire x1="1.6" y1="0.6" x2="1.6" y2="-0.6" width="0.127" layer="51"/>
@@ -4089,7 +4089,7 @@ by exp-lbrs.ulp</description>
 </package>
 </packages>
 <symbols>
-<symbol name="LED_QBLP655R_SECTION1">
+<symbol name="LED_QBLP655_R">
 <wire x1="0" y1="-1.27" x2="2.54" y2="0" width="0.254" layer="94"/>
 <wire x1="2.54" y1="0" x2="0" y2="1.27" width="0.254" layer="94"/>
 <wire x1="2.54" y1="-1.27" x2="2.54" y2="0" width="0.254" layer="94"/>
@@ -4113,7 +4113,7 @@ by exp-lbrs.ulp</description>
 <pin name="C" x="5.08" y="0" visible="pad" length="short" direction="pas" rot="R180"/>
 <pin name="A" x="-2.54" y="0" visible="pad" length="short" direction="pas"/>
 </symbol>
-<symbol name="LED_QBLP655R_SECTION2">
+<symbol name="LED_QBLP655_G">
 <wire x1="0" y1="-1.27" x2="2.54" y2="0" width="0.254" layer="94"/>
 <wire x1="2.54" y1="0" x2="0" y2="1.27" width="0.254" layer="94"/>
 <wire x1="2.54" y1="-1.27" x2="2.54" y2="0" width="0.254" layer="94"/>
@@ -4139,14 +4139,14 @@ by exp-lbrs.ulp</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="QBLP655R" prefix="D">
+<deviceset name="QBLP655-RIG" prefix="D">
 <description>Green, Red 571nm Green, 631nm Red LED Indication - Discrete 2V Green, 2V Red 1206 (3216 Metric) </description>
 <gates>
-<gate name="G$1" symbol="LED_QBLP655R_SECTION1" x="0" y="7.62" swaplevel="1"/>
-<gate name="G$2" symbol="LED_QBLP655R_SECTION2" x="0" y="-7.62" swaplevel="2"/>
+<gate name="G$1" symbol="LED_QBLP655_R" x="0" y="7.62" swaplevel="1"/>
+<gate name="G$2" symbol="LED_QBLP655_G" x="0" y="-7.62" swaplevel="2"/>
 </gates>
 <devices>
-<device name="" package="LED_QBLP655R">
+<device name="" package="LED_QBLP655">
 <connects>
 <connect gate="G$1" pin="A" pad="1"/>
 <connect gate="G$1" pin="C" pad="2"/>
@@ -4222,7 +4222,6 @@ by exp-lbrs.ulp</description>
 <part name="U$8" library="microbuilder" deviceset="VBUS" device=""/>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="RESET" library="EVP-BB1AAB000" deviceset="EVP-BB1AAB000" device=""/>
-<part name="LED" library="QBLP655R" deviceset="QBLP655R" device=""/>
 <part name="GND15" library="supply1" deviceset="GND" device=""/>
 <part name="R8" library="microbuilder" deviceset="RESISTOR" device="_0603MP" value="1K"/>
 <part name="R9" library="microbuilder" deviceset="RESISTOR" device="_0603MP" value="100"/>
@@ -4242,6 +4241,7 @@ by exp-lbrs.ulp</description>
 <part name="FID6" library="microbuilder" deviceset="FIDUCIAL" device="_1MM">
 <attribute name="REV" value="A"/>
 </part>
+<part name="LED" library="QBLP655" deviceset="QBLP655-RIG" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4404,12 +4404,6 @@ by exp-lbrs.ulp</description>
 <attribute name="NAME" x="76.2" y="109.22" size="1.27" layer="95"/>
 <attribute name="VALUE" x="76.2" y="104.14" size="1.27" layer="96" align="top-left"/>
 </instance>
-<instance part="LED" gate="G$1" x="231.14" y="116.84" smashed="yes">
-<attribute name="NAME" x="228.6" y="121.92" size="1.780740625" layer="95"/>
-</instance>
-<instance part="LED" gate="G$2" x="231.14" y="127" smashed="yes">
-<attribute name="NAME" x="228.6" y="132.08" size="1.780740625" layer="95"/>
-</instance>
 <instance part="GND15" gate="1" x="248.92" y="111.76" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="248.92" y="109.22" size="1.778" layer="96" rot="MR0"/>
 </instance>
@@ -4451,6 +4445,8 @@ by exp-lbrs.ulp</description>
 <instance part="FID3" gate="G$1" x="185.42" y="45.72" smashed="yes"/>
 <instance part="FID4" gate="G$1" x="193.04" y="40.64" smashed="yes"/>
 <instance part="FID6" gate="G$1" x="185.42" y="40.64" smashed="yes"/>
+<instance part="LED" gate="G$1" x="231.14" y="116.84" smashed="yes"/>
+<instance part="LED" gate="G$2" x="231.14" y="127" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -4694,7 +4690,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB08/I8/AIN2/SERCOM3.0/SLCD[2]"/>
 </segment>
 </net>
-<net name="SEG16" class="0">
+<net name="SEG23" class="0">
 <segment>
 <wire x1="215.9" y1="101.6" x2="231.14" y2="101.6" width="0.1524" layer="91"/>
 <label x="218.44" y="101.6" size="1.778" layer="95"/>
@@ -4706,7 +4702,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB17/I1/SLCD[43]"/>
 </segment>
 </net>
-<net name="SEG17" class="0">
+<net name="SEG22" class="0">
 <segment>
 <wire x1="215.9" y1="99.06" x2="231.14" y2="99.06" width="0.1524" layer="91"/>
 <label x="218.44" y="99.06" size="1.778" layer="95"/>
@@ -4718,7 +4714,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB16/I0/SLCD[42]"/>
 </segment>
 </net>
-<net name="SEG18" class="0">
+<net name="SEG21" class="0">
 <segment>
 <wire x1="215.9" y1="96.52" x2="231.14" y2="96.52" width="0.1524" layer="91"/>
 <label x="218.44" y="96.52" size="1.778" layer="95"/>
@@ -4730,7 +4726,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA19/I3/SERCOM1+2.3/SLCD[35]"/>
 </segment>
 </net>
-<net name="SEG19" class="0">
+<net name="SEG20" class="0">
 <segment>
 <wire x1="215.9" y1="93.98" x2="231.14" y2="93.98" width="0.1524" layer="91"/>
 <label x="218.44" y="93.98" size="1.778" layer="95"/>
@@ -4742,7 +4738,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA18/I2/SERCOM1+2.2/SLCD[34]"/>
 </segment>
 </net>
-<net name="SEG20" class="0">
+<net name="SEG19" class="0">
 <segment>
 <wire x1="215.9" y1="91.44" x2="231.14" y2="91.44" width="0.1524" layer="91"/>
 <label x="218.44" y="91.44" size="1.778" layer="95"/>
@@ -4754,7 +4750,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA17/I1/SERCOM1+2.1/SLCD[33]"/>
 </segment>
 </net>
-<net name="SEG21" class="0">
+<net name="SEG18" class="0">
 <segment>
 <wire x1="215.9" y1="88.9" x2="231.14" y2="88.9" width="0.1524" layer="91"/>
 <label x="218.44" y="88.9" size="1.778" layer="95"/>
@@ -4766,7 +4762,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA16/I0/SERCOM1+2.0/SLCD[32]"/>
 </segment>
 </net>
-<net name="SEG22" class="0">
+<net name="SEG17" class="0">
 <segment>
 <wire x1="215.9" y1="78.74" x2="231.14" y2="78.74" width="0.1524" layer="91"/>
 <label x="218.44" y="78.74" size="1.778" layer="95"/>
@@ -4778,7 +4774,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA15/I15/SERCOM3.3/SLCD[31]"/>
 </segment>
 </net>
-<net name="SEG23" class="0">
+<net name="SEG16" class="0">
 <segment>
 <wire x1="215.9" y1="76.2" x2="231.14" y2="76.2" width="0.1524" layer="91"/>
 <label x="218.44" y="76.2" size="1.778" layer="95"/>
@@ -4790,7 +4786,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA14/I14/SERCOM3.2/SLCD[30]"/>
 </segment>
 </net>
-<net name="SEG24" class="0">
+<net name="SEG15" class="0">
 <segment>
 <wire x1="215.9" y1="73.66" x2="231.14" y2="73.66" width="0.1524" layer="91"/>
 <label x="218.44" y="73.66" size="1.778" layer="95"/>
@@ -4802,7 +4798,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA13/I13/SERCOM3.1(I2C)/SLCD[29]"/>
 </segment>
 </net>
-<net name="SEG25" class="0">
+<net name="SEG14" class="0">
 <segment>
 <wire x1="215.9" y1="71.12" x2="231.14" y2="71.12" width="0.1524" layer="91"/>
 <label x="218.44" y="71.12" size="1.778" layer="95"/>
@@ -4814,7 +4810,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA12/I12/SERCOM3.0(I2C)/SLCD[28]"/>
 </segment>
 </net>
-<net name="SEG26" class="0">
+<net name="SEG13" class="0">
 <segment>
 <wire x1="215.9" y1="68.58" x2="231.14" y2="68.58" width="0.1524" layer="91"/>
 <label x="218.44" y="68.58" size="1.778" layer="95"/>
@@ -4826,7 +4822,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB15/I15/SERCOM3.3/SLCD[25]"/>
 </segment>
 </net>
-<net name="SEG27" class="0">
+<net name="SEG12" class="0">
 <segment>
 <wire x1="215.9" y1="66.04" x2="231.14" y2="66.04" width="0.1524" layer="91"/>
 <label x="218.44" y="66.04" size="1.778" layer="95"/>
@@ -4838,7 +4834,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB14/I14/SERCOM3.2/SLCD[24]"/>
 </segment>
 </net>
-<net name="SEG28" class="0">
+<net name="SEG11" class="0">
 <segment>
 <wire x1="215.9" y1="63.5" x2="231.14" y2="63.5" width="0.1524" layer="91"/>
 <label x="218.44" y="63.5" size="1.778" layer="95"/>
@@ -4850,7 +4846,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB13/SERCOM3.1/SLCD[23]"/>
 </segment>
 </net>
-<net name="SEG0" class="0">
+<net name="SEG10" class="0">
 <segment>
 <wire x1="215.9" y1="60.96" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
 <label x="218.44" y="60.96" size="1.778" layer="95"/>
@@ -4862,7 +4858,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB12/I12/SERCOM3.0/SLCD[22]"/>
 </segment>
 </net>
-<net name="SEG1" class="0">
+<net name="SEG9" class="0">
 <segment>
 <wire x1="215.9" y1="58.42" x2="231.14" y2="58.42" width="0.1524" layer="91"/>
 <label x="218.44" y="58.42" size="1.778" layer="95"/>
@@ -4874,7 +4870,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PB11/I11/SERCOM3.3/SLCD[21]"/>
 </segment>
 </net>
-<net name="SEG2" class="0">
+<net name="SEG8" class="0">
 <segment>
 <wire x1="215.9" y1="55.88" x2="231.14" y2="55.88" width="0.1524" layer="91"/>
 <label x="218.44" y="55.88" size="1.778" layer="95"/>
@@ -4886,7 +4882,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA11/I11/SERCOM0.3/SLCD[14]"/>
 </segment>
 </net>
-<net name="SEG3" class="0">
+<net name="SEG7" class="0">
 <segment>
 <wire x1="215.9" y1="53.34" x2="231.14" y2="53.34" width="0.1524" layer="91"/>
 <label x="218.44" y="53.34" size="1.778" layer="95"/>
@@ -4898,7 +4894,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA10/I10/SERCOM0.2/SLCD[13]"/>
 </segment>
 </net>
-<net name="SEG4" class="0">
+<net name="SEG6" class="0">
 <segment>
 <wire x1="215.9" y1="50.8" x2="231.14" y2="50.8" width="0.1524" layer="91"/>
 <label x="218.44" y="50.8" size="1.778" layer="95"/>
@@ -4922,7 +4918,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA08/NMI/SERCOM0.0/SLCD[11]"/>
 </segment>
 </net>
-<net name="SEG6" class="0">
+<net name="SEG4" class="0">
 <segment>
 <wire x1="215.9" y1="45.72" x2="231.14" y2="45.72" width="0.1524" layer="91"/>
 <label x="218.44" y="45.72" size="1.778" layer="95"/>
@@ -4934,7 +4930,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA07/I7/AIN7/SERCOM0.3/SLCD[7]"/>
 </segment>
 </net>
-<net name="SEG7" class="0">
+<net name="SEG3" class="0">
 <segment>
 <wire x1="215.9" y1="43.18" x2="231.14" y2="43.18" width="0.1524" layer="91"/>
 <label x="218.44" y="43.18" size="1.778" layer="95"/>
@@ -4946,7 +4942,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA06/I6/AIN6/SERCOM0.2/SLCD[6]"/>
 </segment>
 </net>
-<net name="SEG8" class="0">
+<net name="SEG2" class="0">
 <segment>
 <wire x1="215.9" y1="40.64" x2="231.14" y2="40.64" width="0.1524" layer="91"/>
 <label x="218.44" y="40.64" size="1.778" layer="95"/>
@@ -4958,7 +4954,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA05/I5/AIN5/SERCOM0.1/SLCD[5]"/>
 </segment>
 </net>
-<net name="SEG9" class="0">
+<net name="SEG1" class="0">
 <segment>
 <wire x1="215.9" y1="38.1" x2="231.14" y2="38.1" width="0.1524" layer="91"/>
 <label x="218.44" y="38.1" size="1.778" layer="95"/>
@@ -4970,7 +4966,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U1" gate="A" pin="PA04/I4/AIN4/SERCOM0.0/SLCD[4]"/>
 </segment>
 </net>
-<net name="SEG10" class="0">
+<net name="SEG0" class="0">
 <segment>
 <wire x1="215.9" y1="35.56" x2="231.14" y2="35.56" width="0.1524" layer="91"/>
 <label x="218.44" y="35.56" size="1.778" layer="95"/>

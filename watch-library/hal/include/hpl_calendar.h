@@ -77,12 +77,8 @@ enum calendar_alarm_mode { ONESHOT = 1, REPEAT };
 /**
  * \brief Prototype of callback on alarm match
  */
-typedef void (*calendar_drv_cb_alarm_t)(struct calendar_dev *const dev);
-
-/**
- * \brief Prototype of callback on tamper detect
- */
-typedef void (*tamper_drv_cb_t)(struct calendar_dev *const dev);
+typedef void (*calendar_drv_cb_t)();
+typedef void (*calendar_drv_extwake_cb_t)(uint8_t reason);
 
 /**
  * \brief Structure of Calendar instance
@@ -91,9 +87,11 @@ struct calendar_dev {
 	/** Pointer to the hardware base */
 	void *hw;
 	/** Alarm match callback */
-	calendar_drv_cb_alarm_t callback;
+	calendar_drv_cb_t callback_alarm;
 	/** Tamper callback */
-	tamper_drv_cb_t callback_tamper;
+	calendar_drv_extwake_cb_t callback_tamper;
+	/** Tick callback */
+	calendar_drv_cb_t callback_tick;
 	/** IRQ struct */
 	struct _irq_descriptor irq;
 };
@@ -236,7 +234,7 @@ uint32_t _calendar_get_comp(struct calendar_dev *const dev);
  *
  * \return ERR_NONE on success, or an error code on failure.
  */
-int32_t _calendar_register_callback(struct calendar_dev *const dev, calendar_drv_cb_alarm_t callback);
+int32_t _calendar_register_callback(struct calendar_dev *const dev, calendar_drv_cb_t callback);
 
 /**
  * \brief Set calendar IRQ
@@ -246,6 +244,16 @@ int32_t _calendar_register_callback(struct calendar_dev *const dev, calendar_drv
 void _calendar_set_irq(struct calendar_dev *const dev);
 
 /**
+ * \brief Register callback for 1Hz tick from prescaler
+ *
+ * \param[in] dev The pointer to calendar device struct
+ * \param[in] callback The pointer to callback function
+ *
+ * \return ERR_NONE on success, or an error code on failure.
+ */
+int32_t _prescaler_register_callback(struct calendar_dev *const dev, calendar_drv_cb_t callback);
+
+/**
  * \brief Register callback for tamper detection
  *
  * \param[in] dev The pointer to calendar device struct
@@ -253,7 +261,7 @@ void _calendar_set_irq(struct calendar_dev *const dev);
  *
  * \return ERR_NONE on success, or an error code on failure.
  */
-int32_t _tamper_register_callback(struct calendar_dev *const dev, tamper_drv_cb_t callback_tamper);
+int32_t _extwake_register_callback(struct calendar_dev *const dev, calendar_drv_extwake_cb_t callback);
 
 /**
  * \brief Find tamper is detected on specified pin
