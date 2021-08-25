@@ -38,6 +38,7 @@ void cb_alarm_pressed();
 
 void reset_hund(); // Will reset hundredths to zero, call once a minute.
 void inc_hund(); // Use a timer or something to update the hundredths 100 times a minute
+uint8_t get_hunds();
 void update_sec_display(); // Call to just update the "seconds" part of the display
 void update_display(); // Call as often as you want to update the entire display
 
@@ -93,6 +94,12 @@ void app_setup() {
     watch_register_button_callback(BTN_ALARM, cb_alarm_pressed);
 
     watch_enable_display();
+    
+    // Enable RTC
+    // Enable other timer
+    // Set other timer to count at 100x/min
+    // Setup display
+    // Setup buttons
 }
 
 /**
@@ -111,6 +118,14 @@ void app_prepare_for_sleep() {
  */
 void app_wake_from_sleep() {
     application_state.wake_count++;
+    // Should this go here or in loop? Who knows!
+    // Pull timestamp
+    // Convert Timestamp to HMS
+    // Dunno if I should read from the timer here:
+    //  pro: Get exact number of hunds
+    //  con: might be more power? but less than keeping the timer running.....
+    // Read number of hundredths
+    // Push timestamp to LCD
 }
 
 /**
