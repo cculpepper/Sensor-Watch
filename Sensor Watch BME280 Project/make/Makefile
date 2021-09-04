@@ -5,16 +5,17 @@ BIN = watch
 ##############################################################################
 .PHONY: all directory clean size
 
-CC = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
-SIZE = arm-none-eabi-size
+TOOLCHAINDIR = /opt/gcc-arm-none-eabi-9-2019-q4-major/bin/
+CC = $(TOOLCHAINDIR)/arm-none-eabi-gcc
+OBJCOPY = $(TOOLCHAINDIR)/arm-none-eabi-objcopy
+SIZE = $(TOOLCHAINDIR)/arm-none-eabi-size
 UF2 = python ../../utils/uf2conv.py
 
 ifeq ($(OS), Windows_NT)
   MKDIR = gmkdir
 else
   MKDIR = mkdir
-endif
+endi
 
 CFLAGS += -W -Wall --std=gnu99 -Os
 CFLAGS += -fno-diagnostics-show-caret

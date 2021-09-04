@@ -43,8 +43,8 @@ ephemCity.lat, ephemCity.lon = latitude, longitude
 NYC_TIME = pytz.timezone('America/New_York')
 
 numDays = [31,28,31,30,31,30,31,31,30,31,30,31]
-leapYears = [2016,2020,2024,2030]
-firstYear = 2016
+leapYears = [2016,2020,2024,2028,2032]
+firstYear = 2021
 numYears = 7
 # Lets print out the number of days in each month and what the leap years to
 # the file, as well as the starting year
