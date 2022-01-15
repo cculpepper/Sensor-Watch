@@ -21,7 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#ifndef _WATCH_GPIO_H_INCLUDED
+#define _WATCH_GPIO_H_INCLUDED
 ////< @file watch_gpio.h
+
+#include "watch.h"
 
 /** @addtogroup gpio Digital Input and Output
   * @brief This section covers functions related to general-purpose input and output signals.
@@ -31,6 +35,11 @@
   * @param pin The pin that you wish to act as an input.
   */
 void watch_enable_digital_input(const uint8_t pin);
+
+/** @brief Disables any digital input, along with any pull-up or pull-down configuration.
+  * @param pin The pin that you wish to disable.
+  */
+void watch_disable_digital_input(const uint8_t pin);
 
 /** @brief Enables a pull-up resistor on the selected pin.
   * @param pin The pin that you wish to configure.
@@ -64,3 +73,4 @@ void watch_disable_digital_output(const uint8_t pin);
   */
 void watch_set_pin_level(const uint8_t pin, const bool level);
 /// @}
+#endif

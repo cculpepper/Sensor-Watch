@@ -61,7 +61,7 @@
 // <i> Indicates whether the external interrupt 0 filter is enabled or not
 // <id> eic_arch_filten0
 #ifndef CONF_EIC_FILTEN0
-#define CONF_EIC_FILTEN0 0
+#define CONF_EIC_FILTEN0 1
 #endif
 
 // <q> External Interrupt 0 Event Output Enable
@@ -103,7 +103,7 @@
 // <i> Indicates whether the external interrupt 1 filter is enabled or not
 // <id> eic_arch_filten1
 #ifndef CONF_EIC_FILTEN1
-#define CONF_EIC_FILTEN1 0
+#define CONF_EIC_FILTEN1 1
 #endif
 
 // <q> External Interrupt 1 Event Output Enable
@@ -138,7 +138,7 @@
 // <e> Interrupt 2 Settings
 // <id> eic_arch_enable_irq_setting2
 #ifndef CONF_EIC_ENABLE_IRQ_SETTING2
-#define CONF_EIC_ENABLE_IRQ_SETTING2 1
+#define CONF_EIC_ENABLE_IRQ_SETTING2 0
 #endif
 
 // <q> External Interrupt 2 Filter Enable
@@ -165,7 +165,7 @@
 // <i> This defines input sense trigger
 // <id> eic_arch_sense2
 #ifndef CONF_EIC_SENSE2
-#define CONF_EIC_SENSE2 EIC_NMICTRL_NMISENSE_RISE_Val
+#define CONF_EIC_SENSE2 EIC_NMICTRL_NMISENSE_NONE_Val
 #endif
 
 // <q> External Interrupt 2 Asynchronous Edge Detection Mode
@@ -187,7 +187,7 @@
 // <i> Indicates whether the external interrupt 3 filter is enabled or not
 // <id> eic_arch_filten3
 #ifndef CONF_EIC_FILTEN3
-#define CONF_EIC_FILTEN3 0
+#define CONF_EIC_FILTEN3 1
 #endif
 
 // <q> External Interrupt 3 Event Output Enable
@@ -229,7 +229,7 @@
 // <i> Indicates whether the external interrupt 4 filter is enabled or not
 // <id> eic_arch_filten4
 #ifndef CONF_EIC_FILTEN4
-#define CONF_EIC_FILTEN4 0
+#define CONF_EIC_FILTEN4 1
 #endif
 
 // <q> External Interrupt 4 Event Output Enable
@@ -271,7 +271,7 @@
 // <i> Indicates whether the external interrupt 5 filter is enabled or not
 // <id> eic_arch_filten5
 #ifndef CONF_EIC_FILTEN5
-#define CONF_EIC_FILTEN5 0
+#define CONF_EIC_FILTEN5 1
 #endif
 
 // <q> External Interrupt 5 Event Output Enable
@@ -306,7 +306,7 @@
 // <e> Interrupt 6 Settings
 // <id> eic_arch_enable_irq_setting6
 #ifndef CONF_EIC_ENABLE_IRQ_SETTING6
-#define CONF_EIC_ENABLE_IRQ_SETTING6 1
+#define CONF_EIC_ENABLE_IRQ_SETTING6 0
 #endif
 
 // <q> External Interrupt 6 Filter Enable
@@ -333,7 +333,7 @@
 // <i> This defines input sense trigger
 // <id> eic_arch_sense6
 #ifndef CONF_EIC_SENSE6
-#define CONF_EIC_SENSE6 EIC_NMICTRL_NMISENSE_RISE_Val
+#define CONF_EIC_SENSE6 EIC_NMICTRL_NMISENSE_NONE_Val
 #endif
 
 // <q> External Interrupt 6 Asynchronous Edge Detection Mode
@@ -348,7 +348,7 @@
 // <e> Interrupt 7 Settings
 // <id> eic_arch_enable_irq_setting7
 #ifndef CONF_EIC_ENABLE_IRQ_SETTING7
-#define CONF_EIC_ENABLE_IRQ_SETTING7 1
+#define CONF_EIC_ENABLE_IRQ_SETTING7 0
 #endif
 
 // <q> External Interrupt 7 Filter Enable
@@ -375,7 +375,7 @@
 // <i> This defines input sense trigger
 // <id> eic_arch_sense7
 #ifndef CONF_EIC_SENSE7
-#define CONF_EIC_SENSE7 EIC_NMICTRL_NMISENSE_RISE_Val
+#define CONF_EIC_SENSE7 EIC_NMICTRL_NMISENSE_NONE_Val
 #endif
 
 // <q> External Interrupt 7 Asynchronous Edge Detection Mode
@@ -723,7 +723,13 @@
 
 // </e>
 
-#define CONFIG_EIC_EXTINT_MAP {2, PIN_PA02}, {6, PIN_PA22}, {7, PIN_PA23},
+// this is still a hack: if the user wants to use PA02 (alarm button) as an RTC interrupt pin and PB02 (9-pin A2) on the EIC, we don't support that.
+// TODO item: refactor out our reliance on the ASF external interrupt driver. - joey 11/30
+#ifdef CRYSTALLESS
+#define CONFIG_EIC_EXTINT_MAP {0, PIN_PB00}, {1, PIN_PB01}, {2, PIN_PA02}, {3, PIN_PB03}, {5, PIN_PB05}, {7, PIN_PA07},
+#else
+#define CONFIG_EIC_EXTINT_MAP {0, PIN_PB00}, {1, PIN_PB01}, {2, PIN_PA02}, {3, PIN_PB03}, {6, PIN_PA22}, {7, PIN_PA23},
+#endif
 
 // <<< end of configuration section >>>
 

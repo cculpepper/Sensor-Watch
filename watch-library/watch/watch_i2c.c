@@ -22,12 +22,19 @@
  * SOFTWARE.
  */
 
- struct io_descriptor *I2C_0_io;
+#include "watch_i2c.h"
 
-void watch_enable_i2c() {
+struct io_descriptor *I2C_0_io;
+
+void watch_enable_i2c(void) {
     I2C_0_init();
     i2c_m_sync_get_io_descriptor(&I2C_0, &I2C_0_io);
     i2c_m_sync_enable(&I2C_0);
+}
+
+void watch_disable_i2c(void) {
+    i2c_m_sync_disable(&I2C_0);
+	hri_mclk_clear_APBCMASK_SERCOM1_bit(MCLK);
 }
 
 void watch_i2c_send(int16_t addr, uint8_t *buf, uint16_t length) {

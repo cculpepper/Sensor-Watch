@@ -42,7 +42,7 @@
             - @ref led - This section covers functions related to the bi-color red/green LED mounted behind the LCD.
             - @ref buzzer - This section covers functions related to the piezo buzzer.
             - @ref adc - This section covers functions related to the SAM L22's analog-to-digital converter, as well as
-                         configuring and reading values from the three analog-capable pins on the 9-pin connector.
+                         configuring and reading values from the five analog-capable pins on the 9-pin connector.
             - @ref gpio - This section covers functions related to general-purpose input and output signals.
             - @ref i2c - This section covers functions related to the SAM L22's built-I2C driver, including configuring
                          the I2C bus, putting values directly on the bus and reading data from registers on I2C devices.
@@ -64,5 +64,20 @@
 #include "watch_deepsleep.h"
 
 #include "watch_private.h"
+
+/** @brief Returns true when the battery voltage dips below 2.5V.
+  * @details A CR2016 battery will have a nominal voltage between 2.9 and 3 volts for most of its lifespan. Once the battery
+  *          discharges to about 60%, the voltage will drift slightly lower; this may manifest as a dimmer LED. By the time
+  *          the battery voltage has fallen to 2.5 volts, it will have probably less than 10% of its capacity remaining, and
+  *          you can expect the voltage to drop relatively quickly as the battery dies.
+  */
+bool watch_is_battery_low(void);
+
+/** @brief Returns true if either the buzzer or the LED driver is enabled.
+  * @details Both the buzzer and the LED use the TCC peripheral to drive their behavior. This function returns true if that
+  *          peripheral is enabled. You can use this function to determine whether you need to call the watch_disable_leds or
+  *          or watch_enable_buzzer functions before using these peripherals.
+  */
+bool watch_is_buzzer_or_led_enabled(void);
 
 #endif /* WATCH_H_ */

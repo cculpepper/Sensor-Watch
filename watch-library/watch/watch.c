@@ -24,19 +24,21 @@
 
 #include "watch.h"
 
-// TODO: this should all live in watch_deepsleep.c, but right now watch_extint.c needs it
-// because we're being too clever about the alarm button.
-static void extwake_callback(uint8_t reason);
-ext_irq_cb_t btn_alarm_callback;
+bool battery_is_low = false;
 
-#include "watch_rtc.c"
-#include "watch_slcd.c"
-#include "watch_extint.c"
-#include "watch_led.c"
-#include "watch_buzzer.c"
-#include "watch_adc.c"
-#include "watch_gpio.c"
-#include "watch_i2c.c"
-#include "watch_uart.c"
-#include "watch_deepsleep.c"
-#include "watch_private.c"
+// receives interrupts from MCLK, OSC32KCTRL, OSCCTRL, PAC, PM, SUPC and TAL, whatever that is.
+void SYSTEM_Handler(void) {
+    if (SUPC->INTFLAG.bit.BOD33DET) {
+        battery_is_low = true;
+        SUPC->INTENCLR.bit.BOD33DET = 1;
+        SUPC->INTFLAG.reg &= ~SUPC_INTFLAG_BOD33DET;
+    }
+}
+
+bool watch_is_battery_low(void) {
+    return battery_is_low;
+}
+
+bool watch_is_buzzer_or_led_enabled(void){
+    return hri_mclk_get_APBCMASK_TCC0_bit(MCLK);
+}

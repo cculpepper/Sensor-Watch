@@ -21,26 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#ifndef _WATCH_UART_H_INCLUDED
+#define _WATCH_UART_H_INCLUDED
 ////< @file watch_uart.h
+
+#include "watch.h"
 
 /** @addtogroup debug Debug UART
   * @brief This section covers functions related to the debug UART, available on
   *        pin D1 of the 9-pin connector.
-  * @todo Refactor this as a USB CDC so that folks can debug over USB.
-  */
+  * @warning These functions were used early on in development, before the TinyUSB
+  *          CDC was implemented. You can now print debug messages to the USB console
+  *          using printf, rendering this bit irrelevant. These methods will likely
+  *          be refactored out in the future, in favor of a more full-featured UART
+  *          on the nine-pin connector.
+  **/
 /// @{
 /** @brief Initializes the debug UART.
   * @param baud The baud rate
   */
+__attribute__((deprecated("Use printf to log debug messages over USB.")))
 void watch_enable_debug_uart(uint32_t baud);
 
 /** @brief Outputs a single character on the debug UART.
   * @param c The character you wish to output.
   */
+__attribute__((deprecated("Use printf to log debug messages over USB.")))
 void watch_debug_putc(char c);
 
 /** @brief Outputs a string on the debug UART.
   * @param s A null-terminated string.
   */
+__attribute__((deprecated("Use printf to log debug messages over USB.")))
 void watch_debug_puts(char *s);
 /// @}
+#endif

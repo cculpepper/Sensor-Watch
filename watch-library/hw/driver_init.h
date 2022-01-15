@@ -8,7 +8,17 @@
 #ifndef DRIVER_INIT_INCLUDED
 #define DRIVER_INIT_INCLUDED
 
-#include "atmel_start_pins.h"
+#define GPIO_PIN_FUNCTION_A 0
+#define GPIO_PIN_FUNCTION_B 1
+#define GPIO_PIN_FUNCTION_C 2
+#define GPIO_PIN_FUNCTION_D 3
+#define GPIO_PIN_FUNCTION_E 4
+#define GPIO_PIN_FUNCTION_F 5
+#define GPIO_PIN_FUNCTION_G 6
+#define GPIO_PIN_FUNCTION_H 7
+#define GPIO_PIN_FUNCTION_I 8
+
+#include "pins.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,41 +30,17 @@ extern "C" {
 #include <hal_init.h>
 #include <hal_io.h>
 #include <hal_sleep.h>
-
-#include <hal_adc_sync.h>
-
 #include <hal_ext_irq.h>
-
-#include <hal_calendar.h>
-
 #include <hal_i2c_m_sync.h>
-
+#include <hal_spi_m_sync.h>
 #include <hal_delay.h>
-#include <hpl_tc_base.h>
-#include <hal_pwm.h>
-#include <hpl_tc_base.h>
-
-#include <hal_pwm.h>
-#include <hpl_tcc.h>
 #include <hal_slcd_sync.h>
 
 extern struct adc_sync_descriptor ADC_0;
 
-extern struct calendar_descriptor CALENDAR_0;
-
 extern struct i2c_m_sync_desc I2C_0;
 
-extern struct pwm_descriptor PWM_0;
-
-extern struct pwm_descriptor       PWM_1;
 extern struct slcd_sync_descriptor SEGMENT_LCD_0;
-
-void ADC_0_PORT_init(void);
-void ADC_0_CLOCK_init(void);
-void ADC_0_init(void);
-
-void CALENDAR_0_CLOCK_init(void);
-void CALENDAR_0_init(void);
 
 void I2C_0_CLOCK_init(void);
 void I2C_0_init(void);
@@ -62,16 +48,9 @@ void I2C_0_PORT_init(void);
 
 void delay_driver_init(void);
 
-void PWM_0_PORT_init(void);
-void PWM_0_CLOCK_init(void);
-void PWM_0_init(void);
-
-void PWM_1_PORT_init(void);
-void PWM_1_CLOCK_init(void);
-void PWM_1_init(void);
-
 void EXTERNAL_IRQ_0_init(void);
 
+void SEGMENT_LCD_0_PORT_init(void);
 void SEGMENT_LCD_0_init(void);
 
 #ifdef __cplusplus
